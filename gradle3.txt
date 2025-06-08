@@ -1,0 +1,99 @@
+buld.gradle.kts
+
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+plugins {
+    kotlin("jvm") version "1.8.10"  // Use latest stable Kotlin version
+    application
+}
+group = "org.example"
+version = "1.0-SNAPSHOT"
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(kotlin("stdlib"))  // Kotlin Standard Library
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
+
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "17"  // Match with your JDK version
+}
+tasks.register<Jar>("fatJar") {
+    archiveClassifier.set("all")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes["Main-Class"] = "MainKt"
+    }
+    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
+    with(tasks.jar.get() as CopySpec)
+}
+tasks.register("hello") {
+    doLast {
+        println("Hello, Usha!")
+    }
+}
+
+    application {
+    mainClass.set("MainKt")  // Update this if using a package
+}
+
+
+Main.kt
+
+fun main() {
+    println("Hello, Gradle with Kotlin DSL")
+
+}
+
+#commands
+------------------------------------------------------
+==build.gradel
+
+plugins {
+    id 'groovy'
+    id 'application'
+}
+
+group = 'org.example'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.codehaus.groovy:groovy-all:3.0.9'
+    testImplementation 'junit:junit:4.13.2'
+}
+
+application {
+    mainClass = 'org.example.App'
+}
+
+// A custom task example
+task hello {
+    doLast {
+        println 'Hello, Gradle!'
+    }
+}
+
+
+
+==main.grovvy
+
+package org.example
+
+class App {
+    static void main(String[] args) {
+        println 'Hello from Groovy App!'
+    }
+}
+
+#commands
