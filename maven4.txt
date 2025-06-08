@@ -1,0 +1,85 @@
+====pom.xml
+==dependinsis
+
+<build>
+    <plugins>
+      <!-- Compiler Plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+
+        </configuration>
+      </plugin>
+
+      <!-- Jar Plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>org.example.App</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+
+App.java-----
+
+package org.example;
+
+public class App {
+    public static void main(String[] args) {
+        System.out.println("Hello from Gradle!");
+    }
+}
+
+
+###commands
+mvn clean package
+java -jar .\target\filename-1.0-SNAPSHOT.jar
+gradle init --type pom
+
+
+build.gradel.kts
+
+plugins {
+    java
+}
+
+group = "org.example"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation("junit:junit:4.13.2")
+}
+
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "org.example.App"
+    }
+}
+
+
+##commands
+gradle clean build
+java -jar .\build\libs\filename-1.0-SNAPSHOT.jar
+
+
+
+
+
+
+
